@@ -26,7 +26,7 @@ pub fn start(
             .with_title(title);
 
         let windowed_context = ContextBuilder::new()
-            .with_vsync(false)
+            .with_vsync(true)
             .build_windowed(window_builder, &event_loop)
             .unwrap();
         let windowed_context = unsafe { windowed_context.make_current().unwrap() };

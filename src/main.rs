@@ -16,7 +16,7 @@ mod helpers;
 // Codename "Iosev"
 fn main() {
     #[cfg(not(target_arch = "wasm32"))]
-    helpers::start(1000, 600, "femtovg demo", true);
+    helpers::start(1600, 900, "femtovg demo", true);
     #[cfg(target_arch = "wasm32")]
     helpers::start();
 }
@@ -60,7 +60,7 @@ fn run(
     let mut dragging = false;
     let mut scale = 1.0;
 
-    let engine = engine::Engine::new();
+    let mut engine = engine::Engine::new();
 
     el.run(move |event, _, control_flow| {
         #[cfg(not(target_arch = "wasm32"))]
@@ -111,14 +111,10 @@ fn run(
                     ElementState::Released => dragging = false,
                 },
                 WindowEvent::KeyboardInput {
-                    input:
-                        KeyboardInput {
-                            virtual_keycode: Some(VirtualKeyCode::S),
-                            state: ElementState::Pressed,
-                            ..
-                        },
+                    input,
                     ..
                 } => {
+                    engine.on_keyboard_input(input);
                 }
                 WindowEvent::CloseRequested => *control_flow = ControlFlow::Exit,
                 _ => (),
